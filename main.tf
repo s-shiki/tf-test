@@ -1,10 +1,8 @@
-resource "aws_instance" "example" {
-  ami           = "ami-0f9ae750e8274075b"
+module "dev_server" {
+  source = "./http_server"
   instance_type = "t3.micro"
+}
 
-  user_data = <<EOF
-    #!/bin/bash
-    yum install -y httpd
-    systemctl start httpd.service
-  EOF
+output "public_dns" {
+  value = module.dev_server.public_dns
 }
